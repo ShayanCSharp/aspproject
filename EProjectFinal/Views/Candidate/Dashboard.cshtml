@@ -1,0 +1,15 @@
+﻿
+    <div class="container">
+        <h2>Welcome to Your Dashboard</h2>
+
+        @if ((bool)ViewBag.TestStatus)
+        {
+            <p>The test has been completed. You can <a href="@Url.Action("ViewResults", "Candidate")">view your results here</a>.</p>
+        }
+        else
+        {
+            <p>Current Section: <strong>@ViewBag.CurrentSection</strong></p>
+            <p>You are in progress. Click below to continue your test.</p>
+            <a class="btn btn-primary" href="@Url.Action("LoadQuestion", "Candidate")">Continue Test</a>
+        }
+    </div>

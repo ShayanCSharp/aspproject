@@ -1,0 +1,73 @@
+﻿@model EProjectFinal.Models.Question
+
+@if (Model != null)
+{
+    <div class="container">
+        <h2 class="text-center">@Model.Test?.TestName - Question</h2>
+
+        <form id="questionForm" method="post" action="@Url.Action("SubmitAnswer", "Candidate")">
+            <input type="hidden" name="questionId" value="@Model.QuestionId" />
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>@Model.QuestionText</h4>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectedAnswer" value="Option1" required />
+                            @Model.Option1
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectedAnswer" value="Option2" required />
+                            @Model.Option2
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectedAnswer" value="Option3" required />
+                            @Model.Option3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="selectedAnswer" value="Option4" required />
+                            @Model.Option4
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check if this is the last question -->
+            <button type="submit" class="btn btn-primary"
+                    onclick="handleSubmit('@ViewBag.IsLastQuestion')">
+                @if (ViewBag.IsLastQuestion == true)
+                {
+                    @:Complete Section
+                }
+                else
+                {
+                    @:Submit Answer
+                }
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function handleSubmit(isLastQuestion) {
+            var form = document.getElementById("questionForm");
+            if (isLastQuestion === "True") {
+                // Redirect to CompleteSection if last question
+                form.action = "@Url.Action("CompleteSection", "Candidate")";
+            } else {
+                // Otherwise, go to SubmitAnswer
+                form.action = "@Url.Action("SubmitAnswer", "Candidate")";
+            }
+        }
+    </script>
+}
+else
+{
+    <p class="text-danger text-center">Error: Question data is missing.</p>
+}
